@@ -1,5 +1,6 @@
 package LoveWithLoft.LoveWithLoft.user;
 
+import LoveWithLoft.LoveWithLoft.cart.CartItem;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,11 +31,24 @@ public class User implements UserDetails {
 	private String email;
 	private String password;
 
-	@ElementCollection
-	private List<Long> item;
-
 	@Enumerated(EnumType.STRING)
 	private Role role;
+
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "user_id") // kolumna w tabeli CartItem do przechowywania ID użytkownika
+	private List<CartItem> cartItems; // Lista produktów w koszyku
+
+
+
+
+
+
+
+
+
+
+
+
 
 	@Override public Collection<? extends GrantedAuthority> getAuthorities() {
 		return List.of(new SimpleGrantedAuthority(role.name()));
