@@ -1,5 +1,7 @@
 package LoveWithLoft.LoveWithLoft.auth;
 
+import LoveWithLoft.LoveWithLoft.cart.CartItem;
+import LoveWithLoft.LoveWithLoft.cart.CartItemRepository;
 import LoveWithLoft.LoveWithLoft.config.JwtService;
 import LoveWithLoft.LoveWithLoft.user.Role;
 import LoveWithLoft.LoveWithLoft.user.User;
@@ -18,6 +20,7 @@ public class AuthenticationService {
 	private final PasswordEncoder passwordEncoder;
 	private final JwtService jwtService;
 	private final AuthenticationManager authenticationManager;
+	private final CartItemRepository cartItemRepository;
 
 	public AuthenticationResponse register(RegisterRequest request) {
 		var user = User.builder()
@@ -28,6 +31,11 @@ public class AuthenticationService {
 				.role(Role.USER)
 				.build();
 		repository.save(user);
+
+		CartItem newCartItem = new CartItem();
+		newCartItem.setUser(user);
+		cartItemRepository.save(newCartItem);
+
 		var jwtToken = jwtService.generateToken(user);
 		return AuthenticationResponse.builder()
 				.token(jwtToken)
