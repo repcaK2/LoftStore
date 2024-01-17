@@ -3,6 +3,6 @@ email sender
 status changer
 
 WORKING SQL
-INSERT INTO cart_item (user_id, product_id, name, price)
-VALUES (1, 101, 'Produkt 1', 100.00), -- Zakładając, że Produkt 1 ma ID 101
-       (1, 102, 'Produkt 2', 200.00); -- Zakładając, że Produkt 2 ma ID 102
+       INSERT INTO cart_item (user_id, product_id)
+       VALUES (1, 1);
+

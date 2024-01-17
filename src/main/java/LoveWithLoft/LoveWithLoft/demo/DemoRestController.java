@@ -1,6 +1,5 @@
 package LoveWithLoft.LoveWithLoft.demo;
 
-import LoveWithLoft.LoveWithLoft.user.User;
 import LoveWithLoft.LoveWithLoft.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +14,6 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class DemoRestController {
 
-	private final UserRepository userRepository;
-
 	@GetMapping("/secure")
 	public ResponseEntity<String> sayHello(){
 		return ResponseEntity.ok("Hello form secured endpoint");
@@ -25,14 +22,5 @@ public class DemoRestController {
 	@GetMapping("/info")
 	public String getInfo(Principal principal){
 		return principal.toString();
-	}
-
-	@GetMapping("/me")
-	public ResponseEntity<User> getCurrentUserWithCart(Principal principal){
-		String email = principal.getName();
-
-		return userRepository.findByEmailWithCartItems(email)
-				.map(user -> ResponseEntity.ok().body(user))
-				.orElseGet(() -> ResponseEntity.notFound().build());
 	}
 }
