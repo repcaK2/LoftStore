@@ -1,6 +1,7 @@
 package LoveWithLoft.LoveWithLoft.user;
 
 import LoveWithLoft.LoveWithLoft.cart.CartItem;
+import LoveWithLoft.LoveWithLoft.delivery.Delivery;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -13,4 +14,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	@Query("SELECT ci FROM User u JOIN u.cartItems ci WHERE u.email = :email")
 	Optional<List<CartItem>> findByEmailWithCartItems(String email);
+
+	@Query("SELECT ci FROM User u JOIN u.delivery ci WHERE u.email = :email")
+	Optional<List<Delivery>> findByEmailWithDelivery(String email);
 }

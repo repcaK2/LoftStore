@@ -18,8 +18,9 @@ public class CartController {
 
 	private final UserRepository userRepository;
 	private final ProductRepository productRepository;
+	private final CartItemRepository cartItemRepository;
 
-	@GetMapping("/me")
+	@GetMapping("/cart")
 	public ResponseEntity<List<CartItem>> getCurrentUserWithCart(Principal principal){
 		String email = principal.getName();
 
@@ -30,7 +31,7 @@ public class CartController {
 
 	@PostMapping("/addProductToCart")
 	public ResponseEntity<String> addProductToCart(
-			@RequestParam("id") Long productId,
+			@RequestBody Long productId,
 			Principal principal
 	){
 		String email = principal.getName();
@@ -49,5 +50,13 @@ public class CartController {
 		userRepository.save(user);
 
 		return ResponseEntity.ok("Product dodany do koszyka");
+	}
+
+	@PostMapping("/delete")
+	public ResponseEntity<String> deteleCartProductById(
+			@RequestBody Long id
+	){
+		cartItemRepository.deleteById(id);
+		return ResponseEntity.ok("Produkt został usunięty z koszyka");
 	}
 }

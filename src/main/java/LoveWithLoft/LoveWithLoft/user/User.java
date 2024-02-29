@@ -1,6 +1,7 @@
 package LoveWithLoft.LoveWithLoft.user;
 
 import LoveWithLoft.LoveWithLoft.cart.CartItem;
+import LoveWithLoft.LoveWithLoft.delivery.Delivery;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,15 +39,9 @@ public class User implements UserDetails {
 	@JoinColumn(name = "user_id") // kolumna w tabeli CartItem do przechowywania ID użytkownika
 	private List<CartItem> cartItems; // Lista produktów w koszyku
 
-
-
-
-
-
-
-
-
-
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "user_id") // kolumna w tabeli CartItem do przechowywania ID użytkownika
+	private List<Delivery> delivery;
 
 
 
